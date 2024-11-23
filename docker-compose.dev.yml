@@ -1,0 +1,10 @@
+services:
+  db:
+    container_name: elx-shop-db
+    image: postgres:16.1
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB:       "shop_dev"
+      POSTGRES_USER:     "root"
+      POSTGRES_PASSWORD: "root"
