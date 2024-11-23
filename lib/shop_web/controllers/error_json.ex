@@ -18,4 +18,18 @@ defmodule ShopWeb.ErrorJSON do
   def render(template, _assigns) do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
+
+  def error(%{message: message}), do: %{error: message}
+
+  def error(%{changeset: changeset}),
+    do: %{
+      errors:
+        Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+          Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+            opts |> Keyword.get(String.to_existing_atom(key), key |> to_string())
+          end)
+        end)
+    }
+
+  def error(_fallback), do: %{error: "unexpected error occurred"}
 end
