@@ -35,7 +35,7 @@ defmodule Shop.Products do
 
         case changeset do
           %Ecto.Changeset{valid?: true} -> Repo.insert(changeset)
-          _ -> {:error, changeset: changeset}
+          _ -> {:error, changeset}
         end
     end
   end
